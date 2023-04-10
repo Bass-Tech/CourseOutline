@@ -1,10 +1,8 @@
-import PyDocX
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from App.database import db
 from App.models import document
-from App.maker.py import *
-
+from App.maker import *
 
 app = Flask(__name__)
 SQLALCHEMY_DATABASE_URI = "sqlite:///temp-database.db"
