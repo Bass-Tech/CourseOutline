@@ -6,8 +6,6 @@ from maker.py import *
 
 app = Flask(__name__)
 
-@app.route('/App/views/form', methods=['POST'])
-
 @app.route('/CompiledForm', methods=['POST'])
 def compiled_form():
     handle_form_data()
