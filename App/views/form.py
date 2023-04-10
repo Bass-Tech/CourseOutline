@@ -6,11 +6,10 @@ from App.models import document
 app = Flask(__name__)
 
 
-@app.route('/CompiledForm')
+@app.route('/CompiledForm', methods=['POST'])
 def compiled_form():
     return render_template('CompiledForm.html')
 
-@app.route('/App/views/form.py', methods=['POST'])
 def handle_form_data():
     data = request.get_json()
     function_name = data.get('function_name')
@@ -23,3 +22,4 @@ def handle_form_data():
         return jsonify({'message': 'Data received successfully!'})
     else:
         return jsonify({'error': 'Invalid function name'})
+
