@@ -14,7 +14,9 @@ def compiled_form():
     handle_form_data()
     return render_template('CompiledForm.html')
 
-@app.route('/App/views/form', methods=['POST'])
+@app.route('/CompiledForm', methods=['POST'])
+def compiled_form():
+    return render_template('CompiledForm.html')
 def handle_form_data():
     data = request.get_json()
     function_name = data.get('function_name')
