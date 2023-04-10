@@ -1,10 +1,14 @@
+import PyDocX
 from flask import Flask, request, jsonify, render_template
+from flask_sqlalchemy import SQLAlchemy
 from App.database import db
 from App.models import document
-from maker.py import *
+from App.maker.py import *
 
 
 app = Flask(__name__)
+SQLALCHEMY_DATABASE_URI = "sqlite:///temp-database.db"
+db = SQLAlchemy(app)
 
 @app.route('/CompiledForm', methods=['POST'])
 def compiled_form():

@@ -1,3 +1,4 @@
+import PyDocX
 import random
 from docx import Document
 import docx
