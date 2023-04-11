@@ -21,6 +21,7 @@ def handle_form_data():
         formdata = writeDoc(data)
         doc = document(binary_data=formdata)
         doc = document(binary_data=data.get('data'))
+
         db.session.add(doc)
         db.session.commit()
 
