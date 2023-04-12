@@ -180,7 +180,6 @@ def writeDoc(data):
             p.add_run(data1[i])
             i+=1 
     courseInfo.close()
-    with open('Course Description.txt') as courseInfo:
         p  = document.add_paragraph()
         p.add_run('Course Description').bold = True
         addParagraph(data1[i],document=document)
@@ -294,8 +293,6 @@ def writeDoc(data):
             i=i+1 
         tabledata.append(rowdata)
         addTable(document=document,text=tabledata,rows=len(tabledata[0]),cols=len(tabledata))
-    courseInfo.close()
-    with open('AssessmentDescription.txt') as courseInfo:
         i=0
         dataList = list(part6.items())
         key, value = dataList[i]
