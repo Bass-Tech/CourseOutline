@@ -179,7 +179,6 @@ def writeDoc(data):
             p.add_run(part).bold = True
             p.add_run(data1[i])
             i+=1 
-    courseInfo.close()
         p  = document.add_paragraph()
         p.add_run('Course Description').bold = True
         addParagraph(data1[i],document=document)
