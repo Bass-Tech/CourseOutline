@@ -22,6 +22,7 @@ def combine_word_documents(files):
     change_orientation(merged_document)
     merged_document.save('merged.docx')
     merged_document.save('merged.doc')
+    merged_document.save('text.bin')
 
 def change_orientation(document):
     for section in document.sections:
@@ -79,7 +80,8 @@ def addCheckbox(para, box_id, name,checked):
     end.set(docx.oxml.ns.qn('w:name'), name)
     tag5.append(end)
 def addParagraph(text,document):
-    p  = document.add_paragraph(text)
+    
+    p  = document.add_paragraph(text.replace("\n"," "))
 
 def addBullet(text,document,max):
     """styles = document.styles
@@ -190,7 +192,17 @@ def writeDoc(data):
 
         p  = document.add_paragraph()
         p.add_run('Course Aims').bold = True
-        addParagraph(data1[i],document=document)
+        value = data1[i]
+        if str(1)+"." in value:
+            ##if a 1 is here that means that there is most likely a bullter point the user was trying to do a bullet point 
+            newList = data1[i].split("\n")
+            p  = document.add_paragraph()
+            p.add_run(newList[0])
+            for i in range(1,len(newList)):
+                newList[i] = newList[i].replace(str(i)+".","")
+            addBullet(newList,document=document,max=len(newList))
+        else:
+            addParagraph(data1[i],document=document)
         partList = list(part4.items())
         line = []
         i=0
@@ -210,15 +222,19 @@ def writeDoc(data):
         line = partList[i:]
         p = document.add_paragraph()
         p.add_run('Course Content').bold = True
-        p = document.add_paragraph()
-        p.add_run('The following main topics are covered in this course:')
+       
         key, value = partList[i]
         points=[]
         while 'teachingMethods' not in key:
             points.append(value)
             i=i+1
             key, value = partList[i]
-        addBullet(points,document=document,max=len(points))
+        if(len(points)>1):
+            p = document.add_paragraph()
+            p.add_run('The following main topics are covered in this course:')
+            addBullet(points,document=document,max=len(points))
+        else:
+            addParagraph(points[0],document=document)
 
         key, line = partList[i]
         p = document.add_paragraph()
@@ -405,4 +421,3 @@ def writeDoc(data):
     files = ['even more testing.docx','TemplateFile.docx']
     document.save("even more testing.docx")
     combine_word_documents(files)
-
