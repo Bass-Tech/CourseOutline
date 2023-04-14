@@ -2,32 +2,12 @@ from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from App.database import db
 from App.models import document
-from maker.py import *
+from App.maker import *
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, send_from_directory, send_file, jsonify, current_app
+from flask_login import current_user, login_user, logout_user
 
 
-app = Flask(__name__)
-SQLALCHEMY_DATABASE_URI = "sqlite:///temp-database.db"
-db = SQLAlchemy(app)
-
-@app.route('/CompiledForm', methods=['POST'])
-def compiled_form():
-    handle_form_data()
-    return render_template('CompiledForm.html')
-
-@app.route('/CompiledForm', methods=['POST'])
-def compiled_form():
-    return render_template('CompiledForm.html')
-def handle_form_data():
-    data = request.get_json()
-    function_name = data.get('function_name')
-
-    if function_name == "submitForm":
-        formdata = writeDoc(data)
-        doc = document(binary_data=formdata)
-        db.session.add(doc)
-        db.session.commit()
-
-        return jsonify({'message': 'Data received successfully!'})
-    else:
-        return jsonify({'error': 'Invalid function name'})
-
+form_views = Blueprint('form_views', __name__, template_folder='../templates')
+@form_views.route('/CompiledForm', methods=['GET'])
+def generatreCourseOutline():
+    return render_template("templates/CompiledForm.html")
