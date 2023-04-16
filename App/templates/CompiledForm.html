@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>CETL COURSE OUTLINE FORM</title>
-	<link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
-	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			$(".hamburger").click(function(){
-			   $(".wrapper").toggleClass("collapse");
-			});
-		});
-  
+{% extends "layout.html" %}
 
-	</script>
+{% block title %}Course Outline Generator {% endblock %}
+
+{{ super() }}
+
+{% block content %}
+<script>
+  $(document).ready(function(){
+    $(".hamburger").click(function(){
+       $(".wrapper").toggleClass("collapse");
+    });
+  });
+
+
+</script>
+
     <style>
             table, th, td {
      border: 1px solid darkblue;
@@ -23,7 +22,7 @@
 
      button.next {
       background-color: rgb(14, 14, 195); /* Set the background color for next button */
-      color: black; 
+      color: white; 
       padding: 10px 20px; 
       border: none; 
       border-radius: 5px; 
@@ -36,7 +35,7 @@
 
     button.prev {
         background-color: rgb(14, 14, 195); /* Set the background color for next button */
-        color: black; 
+        color: white; 
         padding: 10px 20px; 
         border: none; 
         border-radius: 5px; 
@@ -47,74 +46,66 @@
         background-color: #091c99; /* Change the background color on hover for next button */
       }
     </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="wrapper">
-  <div class="top_navbar">
-    <div class="hamburger">
-       <div class="one"></div>
-       <div class="two"></div>
-       <div class="three"></div>
-    </div>
-    <div class="top_menu">
-      <div class="logo">University Course Outline Generator</div>
-      <ul>
-        <li><a href="#">
-          <i class="fas fa-search"></i></a></li>
-        <li><a href="#">
-          <i class="fas fa-bell"></i>
-          </a></li>
-        <li><a href="#">
-          <i class="fas fa-user"></i>
-          </a></li>
-      </ul>
-    </div>
-  </div>
-  
-  <div class="sidebar">
-      <ul>
-        <li class="activate"><a href="#">
-  
-          <span class="title">Initial Course Details</span></a></li>
-        <li><a href="#">
-          
-          <span class="title">Course Credit Details</span>
-          </a></li>
-        <li><a href="#">
-          
-          <span class="title">About The Course</span>
-          </a></li>
-        <li><a href="#">
-          
-          <span class="title">Learning Outcomes</span>
-          </a></li>
-        <li><a href="#">
-          
-          <span class="title">Contact Hours</span>
-          </a></li>
-        <li><a href="#">
-          
-          <span class="title">Assessment Details</span>
-          </a></li>
-        <li><a href="#">
-          
-          <span class="title">Course Calender></span>
-          </a></li>
-        <li><a href="#">
-          
-          <span class="title">Attributes</span>
-          </a></li>
-        <li><a href="#">
-          
-          <span class="title">Learning Resources></span>
-          </a></li>
-
-
-
-
-    </ul>
-  </div>
+  <div class="container">
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-sm-3">
+                <div id="sidebar"
+                    class="p-0 m-0 collapse collapse-horizontal show border-end page-height-less-navbar"
+                    style="max-width: 15vw;">
+                    <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start">
+                        <a href="#" onclick="showPage(1)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">Initial Course Details</span>
+                        </a>
+                        <a href="#" onclick="showPage(2)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">Course Credit Details</span>
+                        </a>
+                        <a href="#" onclick="showPage(3)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">About The Course</span>
+                        </a>
+                        <a href="#" onclick="showPage(4)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">Learning Outcomes</span>
+                        </a>
+                        <a href="#" onclick="showPage(5)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">Contact Hours</span>
+                        </a>
+                        <a href="#" onclick="showPage(6)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">Assessment Details</span>
+                        </a>
+                        <a href="#" onclick="showPage(7)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">Course Calendar</span>
+                        </a>
+                        <a href="#" onclick="showPage(8)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">Graduate Attributes</span>
+                        </a>
+                        <a href="#" onclick="showPage(9)"
+                            class="list-group-item border-end-0 d-inline-block text-truncate"
+                            data-bs-parent="#sidebar">
+                            <span class="d-none d-md-inline">Learning Resources</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
   
   <div class="main_container">
 
@@ -775,23 +766,24 @@
 </form>
     
 
-    <div class="element-body">
-      <h3 style="font-weight: bold; text-align: center;">Element Viewer</h3>
-      <br>
-      <p>Click on any element to view its details:</p>
-      <br>
-      <div id="element-details"></div>
-      <div id="element-list">
-         <ul>
-          <li><a href="https://www.w3schools.com">Initial Course Details</a></li><br>
-          <li><a href="https://www.w3schools.com">Course Credit Details</a></li><br>
-          <li><a href="https://www.w3schools.com">About Course Details</a></li><br>
-          <li><a href="https://www.w3schools.com">Course Learning Outcomes</a></li><br>
-          <li><a href="https://www.w3schools.com">Contact Hours</a></li><br>
-          <li><a href="https://www.w3schools.com">Assessment Section</a></li><br>
-         </ul>
-      </div>
-   </div>
+<div class="element-body">
+  <h3 style="font-weight: bold; text-align: center;">Element Viewer</h3>
+  <br>
+  <p>Click on any element to view its details:</p>
+  <br>
+  <div id="element-details"></div>
+  <br>
+  <div id="element-list">
+    <ul>
+      <li><a href="#" onclick="showFormData('page1')">Initial Course Details</a></li><br>
+      <li><a href="#" onclick="showFormData('page2')">Course Credit Details</a></li><br>
+      <li><a href="#" onclick="showFormData('page3')">About Course Details</a></li><br>
+      <li><a href="#" onclick="showFormData('page4')">Course Learning Outcomes</a></li><br>
+      <li><a href="#" onclick="showFormData('page5')">Contact Hours</a></li><br>
+      <li><a href="#" onclick="showFormData('page6')">Assessment Section</a></li><br>
+    </ul>
+  </div>
+</div>
 
 
         
@@ -806,6 +798,7 @@
 
   </div>
 
+  </div>
   <script>
 
 var current_page = 1;
@@ -950,29 +943,66 @@ function submitForm() {
   // Send the JSON data to your server or do something else with it
   console.log(combinedJsonData);
 
-/*
-  fetch('/CompiledForm', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: combinedJsonData
-  })
-  .then(response => response.json())
-  .then(result => {
-    // Handle the response from the Python file
-  })
-  .catch(error => console.error(error));
-*/
+  fetch("{{url_for('form_views.compiled_form_action')}}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: combinedJsonData
+        })
+            .then(response => response.json())
+            .then(result => {
+                window.location.href = `/CompiledForm/download/${result.filename}`
+            })
+            .catch(error => console.error(error));
+
 }
 
-
-
-
-
-
+function showFormData(page) {
+  var elements = document.getElementById(page).querySelectorAll("input, select, textarea, table");
+  var details = document.getElementById("element-details");
+  details.innerHTML = "";
+  for (var i = 0; i < elements.length; i++) {
+    var element = elements[i];
+    var name = element.getAttribute("name");
+    var value = "";
+    var label = "";
+    if (element.tagName === "TABLE") {
+      var rows = element.rows;
+      for (var j = 0; j < rows.length; j++) {
+        var cells = rows[j].cells;
+        for (var k = 0; k < cells.length; k++) {
+          var input = cells[k].querySelector("input, select, textarea");
+          if (input) {
+            var inputName = input.getAttribute("name");
+            var inputValue = input.value;
+            if (inputName && (inputValue || inputValue === 0)) {
+              details.innerHTML += "<div><strong>" + inputName.replace(":", "") + ":</strong> " + inputValue + "</div>";
+            }
+          }
+        }
+      }
+    } else if (element.type === "checkbox") {
+      value = element.checked ? "Checked" : "Not checked";
+      if (name && (value || value === 0)) {
+        details.innerHTML += "<div><strong>" + name.replace(":", "") + ":</strong> " + value + "</div>";
+      }
+    } else if (element.type === "radio") {
+      if (element.checked) {
+        value = element.value;
+        if (name && (value || value === 0)) {
+          details.innerHTML += "<div><strong>" + name.replace(":", "") + ":</strong> " + value + "</div>";
+        }
+      }
+    } else {
+      value = element.value;
+      if (name && (value || value === 0)) {
+        details.innerHTML += "<div><strong>" + name.replace(":", "") + ":</strong> " + value + "</div>";
+      }
+    }
+  }
+}
 
  </script>
 	
-</body>
-</html>
+  {% endblock %}
