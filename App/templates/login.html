@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}Course Outline Generator {% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="row vh-100 align-items-center p-0">
+        <div class="d-none d-md-block col-md-8 vh-100 p-0 bg-dark">
+            <p class="text-white">
+                I need a bkg for here
+            </p>
+        </div>
+
+        <div class="col-sm-12 col-md-4 px-4 ">
+            <form href="{{url_for('login.login_action')}}" method="POST">
+                <div class="mb-3">
+                    <label for="inp_email" class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" id="inp_email" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">Enter your UWI staff email to continue</div>
+                </div>
+                <div class="mb-3">
+                    <label for="inp_pass" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="inp_pass">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="inp_remember">
+                    <label class="form-check-label" for="inp_remember">Remember me</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

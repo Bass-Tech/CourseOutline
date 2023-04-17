@@ -9,13 +9,14 @@
   font-family: 'Montserrat', sans-serif;
 }
 body{
-  background: #e1ecf2;
+  background: white;
 }
 
 
 #sidebar {
   position: absolute;
-  background-color: #f8f9fa; /* Set the background color */
+  margin-top: 50px;
+  background-color: none; /* Set the background color */
   padding: 10px; /* Add padding */
 }
 
@@ -35,6 +36,7 @@ body{
 
 .main_container{
   width: calc(100% - 200px);
+  border-style: solid ;
   margin-top: 70px;
   margin-left: 200px;
   padding: 15px;
@@ -78,11 +80,12 @@ body{
 
 #side-element {
   position: absolute;
+  border-left: white;
   top: 0;
   right: -300px; /* Change this to the width of your side element */
   width: 300px; /* Change this to the width of your side element */
   height: 100%;
-  background-color:#92a6e2; /* Change this to the background color you want */
+  background-color: none; /* Change this to the background color you want */
   z-index: 9999;
   transition: right 0.5s ease-in-out;
 }
@@ -96,7 +99,7 @@ body{
 }
 
 .element-viewer {
-  background-color: #fff;
+  background-color: #ffffffce;
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
@@ -144,7 +147,7 @@ body{
 }
 
 .element-body{
-  background-color: #fff;
+  background-color: #ffffffce;
   margin-left: 20px;
   padding:7px; 
 }
