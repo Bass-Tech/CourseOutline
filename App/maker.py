@@ -1,3 +1,4 @@
+import os
 import random
 from docx import Document
 import docx
@@ -8,6 +9,8 @@ from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt
 import json 
+from flask import current_app
+import uuid
 
 def combine_word_documents(files):
     merged_document = Document()
@@ -20,9 +23,12 @@ def combine_word_documents(files):
             merged_document.element.body.append(element)
     
     change_orientation(merged_document)
-    merged_document.save('merged.docx')
-    merged_document.save('merged.doc')
-    merged_document.save('text.bin')
+    filename = f"{str(uuid.uuid4())}.docx"
+
+    merged_document.save(os.path.join(current_app.instance_path, filename))
+    return filename
+    # merged_document.save('merged.doc')
+    # merged_document.save('text.bin')
 
 def change_orientation(document):
     for section in document.sections:
@@ -124,7 +130,6 @@ take out parts
 def writeDoc(data):
     document = Document()
     
-    data = json.load(f)
     part1 = data['page1']
     part2 = data['page2']
     part3 = data['page3']
@@ -138,7 +143,8 @@ def writeDoc(data):
     i=0
     p = document.add_paragraph()
     p.add_run("THE UNIVERSITY OF THE WEST INDIES DRAFT \n PROPOSAL FOR NEW/REVISED UNDERGRADUATE COURSE").bold=True
-    with open('CourseText.txt') as courseInfo:
+    current_dir = os.path.dirname(__file__)
+    with open(os.path.join(current_dir,'CourseText.txt')) as courseInfo:
         data1 = []
         line = courseInfo.readlines()
         for key in bigPart:
@@ -177,7 +183,8 @@ def writeDoc(data):
             part = part.strip('\n')
             p  = document.add_paragraph()
             p.add_run(part).bold = True
-            p.add_run(data1[i])
+            if i < len(data1):
+                p.add_run(data1[i])
             i+=1 
         p  = document.add_paragraph()
         p.add_run('Course Description').bold = True
@@ -412,8 +419,8 @@ def writeDoc(data):
 
     ################################
     change_orientation(document)
-    document1 = Document('TemplateFile.docx')
+    document1 = Document(os.path.join(current_dir,'TemplateFile.docx'))
     change_orientation(document1)
-    files = ['even more testing.docx','TemplateFile.docx']
+    files = ['even more testing.docx', os.path.join(current_dir,'TemplateFile.docx')]
     document.save("even more testing.docx")
-    combine_word_documents(files)
+    return combine_word_documents(files)
