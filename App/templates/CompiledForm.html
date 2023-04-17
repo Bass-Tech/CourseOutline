@@ -50,8 +50,6 @@
 </head>
 <body>
 
-  <div class="container">
-    <div class="wrapper">
         <div class="row">
             <div class="col-sm-3">
                 <div id="sidebar"
@@ -107,9 +105,8 @@
                 </div>
             </div>
   
+            
   <div class="main_container">
-
-    
 
   <!-- PAGE 1 --> 
   <div class="page" id="page1">
@@ -796,10 +793,14 @@
     </div>
    
 
-  </div>
 
-  </div>
-  <script>
+
+  {% endblock %}
+
+
+{% block page_scripts %}
+
+<script>
 
 var current_page = 1;
 var pages = document.querySelectorAll('.page');

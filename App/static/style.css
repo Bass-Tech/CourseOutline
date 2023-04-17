@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+body{
+  background: #e1ecf2;
+}
+
+
+#sidebar {
+  position: absolute;
+  background-color: #f8f9fa; /* Set the background color */
+  padding: 10px; /* Add padding */
+}
+
+#sidebar-nav a {
+  color: #212529; /* Set the link color */
+  text-decoration: none; /* Remove underline */
+  font-size: 16px; /* Set the font size */
+  padding: 10px; /* Add padding */
+  display: block; /* Make the links full width */
+}
+
+#sidebar-nav a:hover {
+  background-color: #e9ecef; /* Add hover background color */
+}
+
+
+
+.main_container{
+  width: calc(100% - 200px);
+  margin-top: 70px;
+  margin-left: 200px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  display:flex; 
+}
+
+.main_container .page{
+
+  display: none;
+}
+
+.collapse .sidebar{
+  width: 70px;
+}
+
+.collapse .sidebar ul li a{
+  text-align: center; 
+}
+
+.collapse .sidebar ul li a span.icon{
+  margin: 0;
+}
+
+.collapse .sidebar ul li a span.title{
+  display: none;
+}
+
+.collapse .main_container{
+  width: (100% - 70px);
+  margin-left: 70px;
+}
+
+#side-element-container {
+  margin-left: auto;
+  width: 30%;
+  
+   
+  border: 1px solid red;
+}
+
+#side-element {
+  position: absolute;
+  top: 0;
+  right: -300px; /* Change this to the width of your side element */
+  width: 300px; /* Change this to the width of your side element */
+  height: 100%;
+  background-color:#92a6e2; /* Change this to the background color you want */
+  z-index: 9999;
+  transition: right 0.5s ease-in-out;
+}
+
+
+
+#element-viewer-container {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.element-viewer {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.element-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.element-header h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+
+#element-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#element-list li {
+  margin-bottom: 5px;
+}
+
+#element-list a {
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#element-list a:hover {
+  text-decoration: underline;
+}
+
+#toggle-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 22px;
+  padding: 0;
+  margin: 0;
+}
+
+.element-body{
+  background-color: #fff;
+  margin-left: 20px;
+  padding:7px; 
+}
+
+
+
+#page1 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
+
+#page2 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
+
+#page3 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
+
+#page4 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
+
+#page5 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
+
+#page6 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
+
+#page7 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
+
+#page8 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
+
+#page9 {
+  display: block;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+  width: 950px;
+}
