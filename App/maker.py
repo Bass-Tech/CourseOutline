@@ -1,3 +1,4 @@
+import os
 import random
 from docx import Document
 import docx
@@ -8,6 +9,8 @@ from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Pt
 import json 
+from flask import current_app
+import uuid
 
 def combine_word_documents(files):
     merged_document = Document()
@@ -20,9 +23,12 @@ def combine_word_documents(files):
             merged_document.element.body.append(element)
     
     change_orientation(merged_document)
-    merged_document.save('merged.docx')
-    merged_document.save('merged.doc')
-    merged_document.save('text.bin')
+    filename = f"{str(uuid.uuid4())}.docx"
+
+    merged_document.save(os.path.join(current_app.instance_path, filename))
+    return filename
+    # merged_document.save('merged.doc')
+    # merged_document.save('text.bin')
 
 def change_orientation(document):
     for section in document.sections:
@@ -124,7 +130,6 @@ take out parts
 def writeDoc(data):
     document = Document()
     
-    data = json.load(f)
     part1 = data['page1']
     part2 = data['page2']
     part3 = data['page3']
@@ -138,7 +143,8 @@ def writeDoc(data):
     i=0
     p = document.add_paragraph()
     p.add_run("THE UNIVERSITY OF THE WEST INDIES DRAFT \n PROPOSAL FOR NEW/REVISED UNDERGRADUATE COURSE").bold=True
-    with open('CourseText.txt') as courseInfo:
+    current_dir = os.path.dirname(__file__)
+    with open(os.path.join(current_dir,'CourseText.txt')) as courseInfo:
         data1 = []
         line = courseInfo.readlines()
         for key in bigPart:
@@ -174,10 +180,12 @@ def writeDoc(data):
                 tabledata.append(rowdata)
                 addTable(document=document,text=tabledata,rows=len(tabledata[0]),cols=len(tabledata))
                 i=i+len(part2)
-            part = part.strip('\n')
-            p  = document.add_paragraph()
-            p.add_run(part).bold = True
-            p.add_run(data1[i])
+            else:
+                part = part.strip('\n')
+                p  = document.add_paragraph()
+                p.add_run(part).bold = True
+                if i < len(data1):
+                    p.add_run(data1[i])
             i+=1 
         p  = document.add_paragraph()
         p.add_run('Course Description').bold = True
@@ -202,19 +210,22 @@ def writeDoc(data):
         else:
             addParagraph(data1[i],document=document)
         partList = list(part4.items())
-        line = []
+        lines = []
         i=0
         key, value = partList[i]
         while 'courseContent' not in key:
-            if value != "None":
-                line.append(value)
+            if value != "":
+                lines.append(value)
             i=i+1
             key, value = partList[i]
         p = document.add_paragraph()
         p.add_run('Learning Outcomes').bold = True
         p = document.add_paragraph()
         p.add_run('Upon the successful completion of this course, the student will be able to:')
-        addBullet(line,document=document,max=len(line))
+        if lines[0] == "":
+            print("empty")
+        else:
+            addBullet(lines,document=document,max=len(line))
         ## so when we putting this into the system we should probably have a check based on the person cause it kinda look like it have to stay the same
         ##but for now i am leaving it as a point
         line = partList[i:]
@@ -303,58 +314,64 @@ def writeDoc(data):
         p.add_run('Course Assessment Type and Course Learning Outcome Matrix').bold = True
         assignment = ['Assessment', 'Learning Outcomes' ,'Weighting% ','Assessment Description' ,'Duration']
         i=0
-        learningOutcomesNum = len(part4)-2
+        learningOutcomesNum = len(lines)
         heading_text = assignment
     
-        for i in range(1,learningOutcomesNum+1):
-            heading_text.append(str(i))
+        for i in range(0,learningOutcomesNum):
+            heading_text.append(str(i+1))
         rowlen = int((len(part6)-1)/5)
-        table1 = document.add_table(rows=rowlen+2,cols=len(heading_text)-1,style='Table Grid')
-        header = table1.rows[0].cells
-        numbers = table1.rows[1].cells
-        j=0
-        i=0
-        outcomesNum = len(header) - 4
-        while(j<len(header)):
-            if(heading_text[i]=='Learning Outcomes'):
-                header[j].text = heading_text[i]
-                j=j+learningOutcomesNum-1
-            elif(heading_text[i].isnumeric()):
-                break
-            else:
-                header[j].text = heading_text[i]
-            j=j+1
-            i=i+1
-        for i in range(1,outcomesNum):
-            table1.cell(0,i).merge(table1.cell(0,i+1))
-        for i in range(1,outcomesNum+1):
-            table1.cell(1,i).text = heading_text[i+4]
-        for i in range(0,len(numbers)):
-            if table1.cell(1,i).text == '':
-                table1.cell(1,i).merge(table1.cell(0,i))
-        partList = list(part6.items())
         partList = list(part6.items())
         k=1
         key,value = partList[k]
-        last = 0
-        j=0
-        for i in range(0,int((len(partList)-1)/5)):
+        if value == "":
+            print("empty")
+        else:
+            table1 = document.add_table(rows=rowlen+2,cols=len(heading_text)-1,style='Table Grid')
+            header = table1.rows[0].cells
+            numbers = table1.rows[1].cells
             j=0
-            while j<len(assignment)-1:
-                if 'LearningOutcomes' in key:
-                    for part in value:
-                        if(part.isnumeric()):
-                            table1.cell(i+2,j+int(part)-1).text = 'X'
-                            last = int(part)
-                    while table1.cell(0,j).text != 'Weighting% ':
-                        j=j+1
-                    j=j-1
+            i=0
+            outcomesNum = len(header) - 4
+            while(j<len(header)):
+                if(heading_text[i]=='Learning Outcomes'):
+                    header[j].text = heading_text[i]
+                    j=j+learningOutcomesNum-1
+                elif(heading_text[i].isnumeric()):
+                    break
                 else:
-                    table1.cell(i+2,j).text = value
-                if k<len(partList)-1:
-                    k=k+1
-                key ,value= partList[k]
+                    header[j].text = heading_text[i]
                 j=j+1
+                i=i+1
+            for i in range(1,outcomesNum):
+                table1.cell(0,i).merge(table1.cell(0,i+1))
+            for i in range(1,outcomesNum+1):
+                table1.cell(1,i).text = heading_text[i+4]
+            for i in range(0,len(numbers)):
+                if table1.cell(1,i).text == '':
+                    table1.cell(1,i).merge(table1.cell(0,i))
+            partList = list(part6.items())
+            partList = list(part6.items())
+            k=1
+            key,value = partList[k]
+            last = 0
+            j=0
+            for i in range(0,int((len(partList)-1)/5)):
+                j=0
+                while j<len(assignment)-1:
+                    if 'LearningOutcomes' in key:
+                        for part in value:
+                            if(part.isnumeric()):
+                                table1.cell(i+2,j+int(part)-1).text = 'X'
+                                last = int(part)
+                        while table1.cell(0,j).text != 'Weighting% ':
+                            j=j+1
+                        j=j-1
+                    else:
+                        table1.cell(i+2,j).text = value
+                    if k<len(partList)-1:
+                        k=k+1
+                    key ,value= partList[k]
+                    j=j+1
         p = document.add_paragraph()
         p.add_run('Course Calendar').bold = True
         partList = list(part7.items())
@@ -368,23 +385,26 @@ def writeDoc(data):
         key, value = partList[i]
         match = re.search(r'\d{1,2}', key)
         rowdata.append(str(match.group()))
-        while i<len(partList)-1:
-            key, value = partList[i]
-            match = re.search(r'\d{1,2}', key)
-            rowdata.append(value)
-            i=i+1
-            key, value = partList[i]
-            match1 = re.search(r'\d{1,2}', key)
-            if match.group() != match1.group(): ## it's a new week
-                tabledata.append(rowdata)
-                rowdata = rowdata.copy()
-                rowdata.clear()
-                rowdata.append(str(match1.group()))
-        rowdata.append(value)      
-        tabledata.append(rowdata)
-        rowdata = rowdata.copy()
-        rowdata.clear()
-        addTable(document,tabledata,len(tabledata[0]),len(tabledata))
+        if value == "":
+            print("empty")
+        else:
+            while i<len(partList)-1:
+                key, value = partList[i]
+                match = re.search(r'\d{1,2}', key)
+                rowdata.append(value)
+                i=i+1
+                key, value = partList[i]
+                match1 = re.search(r'\d{1,2}', key)
+                if match.group() != match1.group(): ## it's a new week
+                    tabledata.append(rowdata)
+                    rowdata = rowdata.copy()
+                    rowdata.clear()
+                    rowdata.append(str(match1.group()))
+            rowdata.append(value)      
+            tabledata.append(rowdata)
+            rowdata = rowdata.copy()
+            rowdata.clear()
+            addTable(document,tabledata,len(tabledata[0]),len(tabledata))
         partList = list(part8.items())
         p = document.add_paragraph()
         p.add_run('Attributes of the Ideal UWI Graduate').bold = True
@@ -412,8 +432,8 @@ def writeDoc(data):
 
     ################################
     change_orientation(document)
-    document1 = Document('TemplateFile.docx')
+    document1 = Document(os.path.join(current_dir,'TemplateFile.docx'))
     change_orientation(document1)
-    files = ['even more testing.docx','TemplateFile.docx']
+    files = ['even more testing.docx', os.path.join(current_dir,'TemplateFile.docx')]
     document.save("even more testing.docx")
-    combine_word_documents(files)
+    return combine_word_documents(files)
